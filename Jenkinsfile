@@ -1,25 +1,20 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.12-slim'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
-
+    agent any
+    
     environment {
+        PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:${env.PATH}"
         DOCKER_IMAGE = "donateadish_app:latest"
         DOCKER_REGISTRY = "docker.io/anmol2503"
         ENV_FILE = ".env"
     }
-
+    
     stages {
-
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/anmol2503/DonateaDish-running.git'
             }
         }
-
+        
         stage('Install & Test') {
             steps {
                 sh '''
@@ -32,13 +27,13 @@ pipeline {
                 '''
             }
         }
-
+        
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
-
+        
         stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', 
@@ -52,18 +47,24 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl apply -f k8s/'
             }
         }
-
     }
-
+    
     post {
         always {
             echo "Pipeline finished"
+            cleanWs()
+        }
+        success {
+            echo "Pipeline completed successfully!"
+        }
+        failure {
+            echo "Pipeline failed. Please check the logs."
         }
     }
 }
