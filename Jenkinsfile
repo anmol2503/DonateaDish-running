@@ -8,24 +8,24 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
-                // Use GitHub credentials stored in Jenkins
-                git branch: 'main',
-                    url: 'https://github.com/anmol2503/DonateaDish-running.git',
-                    credentialsId: 'github-creds'
+                // Use your GitHub repo URL
+                git branch: 'main', url: 'https://github.com/anmol2503/DonateaDish-running.git'
             }
         }
 
         stage('Install & Test') {
             steps {
                 sh '''
-                python3.12 -m venv venv
-                source venv/bin/activate
-                pip install --upgrade pip
-                pip install -r requirements.txt
-                # Optional: run tests if you have any
-                # pytest tests/
+                # Use Docker Python image to ensure correct Python version
+                docker run --rm -v $PWD:/app -w /app python:3.12-slim bash -c "
+                    pip install --upgrade pip &&
+                    pip install -r requirements.txt
+                    # Optional: run tests if you have any
+                    # pytest tests/
+                "
                 '''
             }
         }
@@ -33,7 +33,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                docker --version
                 docker build -t $DOCKER_IMAGE .
                 '''
             }
