@@ -1,19 +1,19 @@
-# Use official Python image
-FROM python:3.11-slim
+# Use Python 3.12 slim image
+FROM python:3.12-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy requirements and install
+# Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt
 
 # Copy the rest of the app
 COPY . .
 
-# Expose port (matches Flask app)
+# Expose port
 EXPOSE 5000
 
-# Environment variables can be passed at runtime
-# CMD to start the app
+# Default command
 CMD ["python", "app.py"]
