@@ -5,7 +5,8 @@ pipeline {
         DOCKER_IMAGE = "donateadish_app:latest"
         DOCKER_REGISTRY = "docker.io/anmol2503"
         ENV_FILE = ".env"
-        PATH = "/opt/homebrew/bin:${env.PATH}" // safe way to prepend Homebrew
+        // Correct way to extend PATH in Jenkinsfile
+        PATH = "/opt/homebrew/bin:${env.PATH}"
     }
 
     stages {
@@ -17,13 +18,13 @@ pipeline {
 
         stage('Install & Test') {
             steps {
+                // Use simple shell commands — do not nest bash in sh
                 sh '''
                 python3 -m venv venv
-                source venv/bin/activate
+                . venv/bin/activate
                 pip install --upgrade pip
                 pip install -r requirements.txt
-                # Optional: run tests
-                # pytest tests/
+                # pytest tests/  # Optional if you have tests
                 '''
             }
         }
@@ -37,8 +38,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', 
-                                                  passwordVariable: 'DOCKER_PASS', 
-                                                  usernameVariable: 'DOCKER_USER')]) {
+                                                  usernameVariable: 'DOCKER_USER', 
+                                                  passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
                     echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
                     docker tag $DOCKER_IMAGE $DOCKER_REGISTRY/$DOCKER_IMAGE
