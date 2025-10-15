@@ -5,11 +5,7 @@ pipeline {
         DOCKER_IMAGE = "donateadish_app:latest"
         DOCKER_REGISTRY = "docker.io/anmol2503"
         ENV_FILE = ".env"
-    }
-
-    options {
-        // Append Homebrew bin to PATH safely
-        envVars(['PATH+BREW': '/opt/homebrew/bin'])
+        PATH+BREW = "/opt/homebrew/bin:${env.PATH}" // append Homebrew bin safely
     }
 
     stages {
