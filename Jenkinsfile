@@ -35,15 +35,29 @@ pipeline {
         }
         
         stage('Push Docker Image') {
+            when {
+                expression { 
+                    return env.SKIP_DOCKER_PUSH != 'true' 
+                }
+            }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', 
-                                                  usernameVariable: 'DOCKER_USER', 
-                                                  passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                        docker tag $DOCKER_IMAGE $DOCKER_REGISTRY/$DOCKER_IMAGE
-                        docker push $DOCKER_REGISTRY/$DOCKER_IMAGE
-                    '''
+                script {
+                    try {
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', 
+                                                          usernameVariable: 'DOCKER_USER', 
+                                                          passwordVariable: 'DOCKER_PASS')]) {
+                            sh '''
+                                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                                docker tag $DOCKER_IMAGE $DOCKER_REGISTRY/$DOCKER_IMAGE
+                                docker push $DOCKER_REGISTRY/$DOCKER_IMAGE
+                                docker logout
+                            '''
+                        }
+                    } catch (Exception e) {
+                        echo "Failed to push Docker image: ${e.getMessage()}"
+                        echo "Please ensure Docker Hub credentials are configured in Jenkins"
+                        error("Docker push failed")
+                    }
                 }
             }
         }
