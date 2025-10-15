@@ -5,7 +5,11 @@ pipeline {
         DOCKER_IMAGE = "donateadish_app:latest"
         DOCKER_REGISTRY = "docker.io/anmol2503"
         ENV_FILE = ".env"
-        PATH = "/opt/homebrew/bin:${env.PATH}"  // ensure Jenkins sees docker
+    }
+
+    options {
+        // Append Homebrew bin to PATH safely
+        envVars(['PATH+BREW': '/opt/homebrew/bin'])
     }
 
     stages {
