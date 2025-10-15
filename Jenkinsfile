@@ -5,6 +5,7 @@ pipeline {
         DOCKER_IMAGE = "donateadish_app:latest"
         DOCKER_REGISTRY = "docker.io/anmol2503"
         ENV_FILE = ".env"
+        PATH = "/opt/homebrew/bin:${env.PATH}" // safe way to prepend Homebrew
     }
 
     stages {
@@ -17,7 +18,6 @@ pipeline {
         stage('Install & Test') {
             steps {
                 sh '''
-                export PATH=/opt/homebrew/bin:$PATH
                 python3 -m venv venv
                 source venv/bin/activate
                 pip install --upgrade pip
@@ -30,10 +30,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh '''
-                export PATH=/opt/homebrew/bin:$PATH
-                docker build -t $DOCKER_IMAGE .
-                '''
+                sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
 
@@ -43,7 +40,6 @@ pipeline {
                                                   passwordVariable: 'DOCKER_PASS', 
                                                   usernameVariable: 'DOCKER_USER')]) {
                     sh '''
-                    export PATH=/opt/homebrew/bin:$PATH
                     echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
                     docker tag $DOCKER_IMAGE $DOCKER_REGISTRY/$DOCKER_IMAGE
                     docker push $DOCKER_REGISTRY/$DOCKER_IMAGE
@@ -54,10 +50,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh '''
-                export PATH=/opt/homebrew/bin:$PATH
-                kubectl apply -f k8s/
-                '''
+                sh 'kubectl apply -f k8s/'
             }
         }
     }
