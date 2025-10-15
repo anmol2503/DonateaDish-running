@@ -1,0 +1,455 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Dancing+Script:wght@400..700&family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Style+Script&display=swap');
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    display: flex;
+    justify-content: right;
+    backdrop-filter: transparent;
+    -webkit-backdrop-filter: transparent;
+    color: #fff;
+    padding-top: 10px;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a.join-now {
+    background-color: #ff6f61;
+    padding: 5px 10px;
+    border-radius: 5px;
+    backdrop-filter: blur(5px); /* Optional: Add blur to the button */
+    -webkit-backdrop-filter: blur(5px); /* For Safari support */
+}
+
+.hero {
+    background-image: url("/static/images/mainbg.jpg"); /* Add your background image */
+    background-size: cover;
+    color:white;
+    max-width: 100vw;
+    height: 100vh;
+}
+
+.hero h1 {
+    font-size: 75px;
+    font-family: "Alfa Slab One", serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 85%;
+    margin-bottom: 20px;
+}
+.hero-content{
+    display: flex;
+    justify-content: left;
+    padding-left: 100px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 700px;
+    box-sizing: border-box; 
+}
+
+.para {
+    display: flex;
+    width: 600px;
+    flex-wrap: wrap;
+    font-weight: 500;
+    font-size: large;
+    text-overflow: none;
+    text-align: justify;
+}
+
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    width: 180px;
+    height: 60px;
+    font-size:20px;
+    border-radius: 50px;
+    margin-right: 20px;
+    box-sizing: border-box;
+}
+
+.btndonate{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff6f61;
+    color: #fff;
+    margin-top: 35px;
+    padding: 10x 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    width: 250px;
+    height: 80px;
+    font-size:30px;
+    border-radius: 50px;
+}
+
+.btn:hover{
+    background-color: rgba(51, 51, 51, 0.7); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Gaussian blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+}
+.btndonate:hover{
+    background-color: rgba(51, 51, 51, 0.7); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Gaussian blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+}
+/* Animated Down Arrow */
+.arrow-down {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+}
+
+.arrow-down i {
+    font-size: 2em;
+    color: #fff;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.hero h1 {
+    animation: slideInFromLeft 1s ease-out forwards;
+    opacity: 0; /* Start with opacity 0 */
+}
+
+.hero .para {
+    animation: slideInFromLeft 1.5s ease-out forwards;
+    opacity: 0; /* Start with opacity 0 */
+    animation-delay: 0.2s; /* Delay the paragraph animation */
+}
+
+.hero .btndonate {
+    animation: slideInFromLeft 1.5s ease-out forwards;
+    opacity: 0; /* Start with opacity 0 */
+    animation-delay: 0.75s; /* Delay the button animation */
+}
+
+.hero .Sign-in {
+    animation: slideInFromRight 1s ease-out forwards; /* Fixed the typo here */
+    opacity: 0; /* Start with opacity 0 */
+    animation-delay: 0.5s;
+}
+
+
+.why-choose-us {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.why-choose-us h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+}
+
+.imgbadge{
+    width: 170px;
+    height: 120px;
+    margin-bottom: 25px;
+}
+
+.imgchange{
+    padding: 25px;
+    width: 100px;
+    height: 100px;
+}
+
+.imgincentives{
+    width: 230px;
+    height: 150px;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.feature {
+    max-width: 300px;
+    margin: 20px;
+}
+
+.feature h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+.current{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.current h2{
+    font-size: 2.5em;
+    margin-bottom: 40px;
+}
+
+.explanation{
+    display: flex;
+    padding-left: 100px;
+    padding-right: 100px;
+    justify-self: left;
+}
+
+.current p{
+    margin-left: 50px;
+    margin-right: 150px;
+    margin-top: 50px;
+    text-align: justify;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.current img{
+    width: 450px;
+    height: 400px;
+}
+
+
+/* Responsive Styles */
+
+@media (max-width: 1024px) {
+    
+    .hero-content {
+        padding-left: 50px;
+        width: 90%;
+    }
+
+    .para {
+        width: 90%;
+    }
+
+
+    .btndonate {
+        width: 200px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .explanation {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+
+    .explanation p{
+        font-size: 1rem;
+    }
+
+    .current p {
+        margin: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .hero h1 {
+        font-size: 50px;
+    }
+
+    .para {
+        font-size: 1rem;
+    }
+
+    .btndonate {
+        width: 180px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature {
+        max-width: 90%;
+    }
+
+    .imgbadge, .imgincentives, .imgchange {
+        width: 80%;
+        height: auto;
+    }
+
+    .current img {
+        width: 90%;
+        height: auto;
+        align-self: center;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        justify-content: end;
+        padding-right: 0;
+    }
+
+    .hero-content {
+        padding: 20px;
+        width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+        line-height: 1.1;
+    }
+
+    .para {
+        font-size: 0.95rem;
+        width: 100%;
+    }
+    .btn,
+    .btndonate {
+        width: 160px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .arrow-down i {
+        font-size: 1.5em;
+    }
+
+    .current h2 {
+        font-size: 1.8em;
+    }
+
+    .current p {
+        font-size: 1rem;
+        margin: 10px;
+    }
+}
+
+.feature-img {
+    width: 100%;
+    max-width: 160px;
+    height: 120px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 20px auto;
+  }
+  
+  @media (max-width: 600px) {
+    .feature-img {
+      max-width: 120px;
+      height: auto;
+    }
+  }
+  
+  
+/* Scroll Animation Styles */
+.scroll-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  
+  .scroll-element.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .why-choose-us h2.animated {
+    transition-duration: 0.6s;
+  }
+  
+  .feature.animated {
+    transition-duration: 0.7s;
+  }
+  
+  .current h2.animated {
+    transition-duration: 0.6s;
+  }
+  
+  .explanation p.animated {
+    transition-duration: 0.8s;
+  }
+  
+  .explanation img.animated {
+    transition-duration: 0.9s;
+  }

@@ -1,0 +1,347 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f9fafb;
+}
+
+.container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+.left-pane {
+    width: 50%; /* Half of the container on large screens */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #212020; /* Dark background for left pane */
+    color: white; /* Default text color for left pane */
+    padding: 20px; /* Add padding for smaller screens */
+    text-align: center;
+}
+
+.switcher {
+    display: flex;
+    background: #e0e0e0;
+    border-radius: 25px;
+    overflow: hidden;
+    width: 200px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.switcher button {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s;
+    color: #555;
+    text-align: center;
+}
+
+.switcher .slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: #ff6f61;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease-in-out; /* Smooth sliding animation */
+    transform: translateX(0); /* Initial position */
+}
+
+.switcher .slider span {
+    color: white;
+    font-weight: bold;
+}
+
+.switcher button.active {
+    color: white;
+}
+
+.auth-forms {
+    width: 80%;
+    max-width: 400px;
+}
+
+.form {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form.active {
+    display: flex;
+}
+
+.form h2 {
+    text-align: center;
+    color: white; /* White text for form headers */
+    margin-bottom: 20px;
+    font-size: 24px; /* Slightly smaller font size */
+}
+
+.form input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    color: white; /* White text for input fields */
+    background: #333; /* Dark background for input fields */
+    width: 100%; /* Full width inputs */
+}
+
+.form input::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Light gray placeholder text */
+}
+
+.form input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.sign-in,
+.sign-up {
+    width: 100%; /* Full width buttons */
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s;
+    color: white; /* White text for buttons */
+}
+
+.sign-in {
+    margin-top: 30px; /* Reduced margin for smaller screens */
+    background: #ff6f61;
+    margin-bottom: 10px;
+    border-radius: 50px;
+}
+
+.sign-up {
+    background: #ff6f61;
+    margin-bottom: 20px;
+    border-radius: 50px;
+}
+
+.right-pane {
+    width: 50%; /* Half of the container on large screens */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0;
+    background-image: url("/static/images/login-img.avif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; /* Center the image */
+}
+
+/* Flash messages styling */
+.flash {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    max-width: 400px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+.flash.primary {
+    background-color: #cce5ff;
+    color: #004085;
+    border: 2px solid #004085;
+}
+
+.flash.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 2px solid #721c24;
+}
+
+.flash.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 2px solid #856404;
+}
+
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 2px solid #155724;
+}
+
+/* Add smooth transition for color change */
+.flash.primary,
+.flash.danger,
+.flash.warning,
+.flash.success {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Fade-in animation for flash messages */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Optional: Animation to fade out flash message after some time */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.flash.fade-out {
+    animation: fadeOut 1s forwards;
+    animation-delay: 3s; /* Flash will fade out after 3 seconds */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    /* Hide the right pane on smaller screens */
+    .right-pane {
+        display: none; /* Hide the image */
+    }
+
+    /* Adjust container layout */
+    .container {
+        flex-direction: column; /* Stack panes vertically */
+        align-items: center; /* Center the content */
+    }
+
+    /* Make left pane full width */
+    .left-pane {
+        width: 100%;
+        height: 100%; /* Take full height */
+        justify-content: center; /* Center content vertically */
+    }
+
+    /* Adjust switcher width */
+    .switcher {
+        width: 90%;
+    }
+
+    /* Reduce font sizes for better readability */
+    .form h2 {
+        font-size: 20px;
+    }
+
+    .form input {
+        font-size: 14px;
+    }
+
+    .sign-in,
+    .sign-up {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further adjustments for very small screens */
+    .switcher {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .form h2 {
+        font-size: 18px;
+    }
+
+    .form input {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .sign-in,
+    .sign-up {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    /* Reduce margins and padding */
+    .left-pane {
+        padding: 15px;
+    }
+
+    .auth-forms {
+        padding: 0 10px;
+    }
+}
+
+
+.btnhome {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    background-color: #ff6f61;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    overflow: hidden;
+    transition: width 0.3s ease, border-radius 0.3s ease;
+    padding: 0;
+}
+
+.btnhome .icon {
+    font-size: 18px;
+    transition: opacity 0.2s ease;
+}
+
+.btnhome .text {
+    position: absolute;
+    opacity: 0;
+    white-space: nowrap;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+    /* Center the text */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* On hover: expand and show text */
+.btnhome:hover {
+    width: 150px;
+    border-radius: 25px;
+}
+
+.btnhome:hover .icon {
+    opacity: 0;
+}
+
+.btnhome:hover .text {
+    opacity: 1;
+}
