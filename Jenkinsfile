@@ -1,15 +1,19 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.12-slim'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         DOCKER_IMAGE = "donateadish_app:latest"
         DOCKER_REGISTRY = "docker.io/anmol2503"
         ENV_FILE = ".env"
-        // Correct way to extend PATH in Jenkinsfile
-        PATH = "/opt/homebrew/bin:${env.PATH}"
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/anmol2503/DonateaDish-running.git'
@@ -18,13 +22,13 @@ pipeline {
 
         stage('Install & Test') {
             steps {
-                // Use simple shell commands — do not nest bash in sh
                 sh '''
-                python3 -m venv venv
-                . venv/bin/activate
-                pip install --upgrade pip
-                pip install -r requirements.txt
-                # pytest tests/  # Optional if you have tests
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                    # Optional: run tests
+                    # pytest tests/
                 '''
             }
         }
@@ -41,9 +45,9 @@ pipeline {
                                                   usernameVariable: 'DOCKER_USER', 
                                                   passwordVariable: 'DOCKER_PASS')]) {
                     sh '''
-                    echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                    docker tag $DOCKER_IMAGE $DOCKER_REGISTRY/$DOCKER_IMAGE
-                    docker push $DOCKER_REGISTRY/$DOCKER_IMAGE
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker tag $DOCKER_IMAGE $DOCKER_REGISTRY/$DOCKER_IMAGE
+                        docker push $DOCKER_REGISTRY/$DOCKER_IMAGE
                     '''
                 }
             }
@@ -54,6 +58,7 @@ pipeline {
                 sh 'kubectl apply -f k8s/'
             }
         }
+
     }
 
     post {
