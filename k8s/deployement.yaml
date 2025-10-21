@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: donateadish-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: donateadish
+  template:
+    metadata:
+      labels:
+        app: donateadish
+    spec:
+      containers:
+      - name: donateadish
+        image: anmol2503/donateadish_app:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: AIVEN_USER
+          valueFrom:
+            secretKeyRef:
+              name: donateadish-secrets
+              key: aiven-user
+        - name: AIVEN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: donateadish-secrets
+              key: aiven-password
+        - name: AIVEN_HOST
+          valueFrom:
+            secretKeyRef:
+              name: donateadish-secrets
+              key: aiven-host
+        - name: AIVEN_PORT
+          valueFrom:
+            secretKeyRef:
+              name: donateadish-secrets
+              key: aiven-port
+        - name: AIVEN_DB
+          valueFrom:
+            secretKeyRef:
+              name: donateadish-secrets
+              key: aiven-db
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: donateadish-secrets
+              key: secret-key
+        - name: MAIL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: donateadish-secrets
+              key: mail-username
+        - name: MAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: donateadish-secrets
+              key: mail-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: donateadish-service
+spec:
+  type: NodePort
+  selector:
+    app: donateadish
+  ports:
+  - port: 80
+    targetPort: 5000
+    nodePort: 30080
