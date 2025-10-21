@@ -67,8 +67,8 @@ pipeline {
                 script {
                     sh '''
                         kubectl apply -f k8s/secrets.yaml
-                        kubectl apply -f k8s/deployement.yaml
-                        kubectl rollout status deployement/donateadish-app
+                        kubectl apply -f k8s/deployment.yaml
+                        kubectl rollout status deployment/donateadish-app
                     '''
                 }
             }
